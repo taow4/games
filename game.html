@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   <script>
+      var option;
+
+      $(document).ready(function () {
+         setupBoard();
+         $(".option").draggable(
+            {
+               revert: false, helper: "clone",
+               start: function () {
+                  option = $(this).attr("data-option");
+               },
+
+               stop: function () {
+                  option = "";
+               }
+            }
+         );
+         $(".cell").droppable({
+            hoverClass: "cell_hover",
+            drop: function(event, ui){
+               $(this).removeClass("default");
+               $(this).removeClass("red");
+               $(this).removeClass("blue");
+               $(this).removeClass("neutral");
+               $(this).removeClass("kill");
+               $(this).addClass(option);
+            }
+         });
+
+
+      });
+
+
+      function setupBoard() {
+
+         for (i = 0; i < 25; i++) {
+            $("#board").append("<div class=\"cell\">test" + i + "</div>");
+         }
+
+      }
+
+   </script>
+   <style>
+      #board {
+         margin: 20px 0 0 0;
+      }
+
+      .cell_hover {
+         background-color: yellow !important;
+      }
+
+      .cell {
+         float: left;
+         width: 18%;
+         height: 100px;
+         text-align: center;
+         border: solid 2px gray;
+         font-family: Arial, Helvetica, sans-serif;
+         font-size: 25px;
+         font-weight: bold;
+         padding-top: 30px;
+         margin: 0 5px 5px 0;
+         background-color: beige;
+      }
+
+      #option_container {
+         margin: 20px 0 0 0;
+      }
+
+      .option {
+         float: left;
+         width: 10%;
+         height: 80px;
+         text-align: center;
+         border: solid 2px gray;
+         font-family: Arial, Helvetica, sans-serif;
+         font-size: 25px;
+         font-weight: bold;
+         padding-top: 30px;
+         margin: 0 20px 0 0;
+
+      }
+      .default{
+         background-color: beige;
+      }
+      .red {
+         background-color: coral;
+      }
+
+      .blue {
+         background-color: lightblue;
+      }
+
+      .neutral {
+         background-color: silver;
+      }
+
+      .kill {
+         background-color: mediumpurple;
+      }
+
+      .clear::after {
+         content: "";
+         clear: both;
+         display: table;
+      }
+   </style>
+
+</head>
+
+<body>
+
+   <div id="board" class="clear">
+
+   </div>
+
+   <div id="option_container" class="clear">
+      <div class="option red" data-option="red" >Red</div>
+      <div class="option blue" data-option="blue">Blue</div>
+      <div class="option neutral" data-option="neutral">Neutral</div>
+      <div class="option kill" data-option="kill">Kill</div>
+      <div class="option default" data-option="default">Reset</div>
+   </div>
+   
+</body>
+
+</html>
